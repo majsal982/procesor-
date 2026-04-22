@@ -1,6 +1,9 @@
 # Procesor-
 
-Maja Salnik - majsal982 - 
-Liliana Szoszew - 
-Beata Chycka - Becia123
-Igor Brzeziński- SeishiUmaiIB
+linijki z poleceniami : Maja Salnik - majsal982 - 
+
+pamięć: Liliana Szoszew - lilaaa1234
+
+wejscie i wyjscie : Beata Chycka - Becia123
+
+proces (lewy gorny róg) : Igor Brzeziński- SeishiUmaiIB
