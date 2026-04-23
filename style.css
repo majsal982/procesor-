@@ -1,1 +1,20 @@
+body{
+    margin: 0px;
+}
 
+#processor{
+    width: 20%;
+    height: 150px;
+    background-color: beige;
+    text-align: center;
+    border-radius: 10px;
+}
+
+h3{
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-family: 'Pixelify Sans', sans-serif;
+    border-radius: 7px;
+    background-color: bisque;
+    width: 150px;
+}
