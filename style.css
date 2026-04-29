@@ -18,3 +18,8 @@ h3{
     background-color: bisque;
     width: 150px;
 }
+
+#lewy{
+    float: left;
+    width: 20%;
+}
