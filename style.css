@@ -89,4 +89,16 @@ footer{
     padding: 1px 6px;
     color: gray;
 }
+.numeracja{
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    padding: 0 40px;
+}
+.strzalka{
+    text-align: center;
+    color: orange;
+    font-size: 16px;
+}
+
 
