@@ -23,15 +23,4 @@ const processor = {
 }
 
 // KONIEC
-function dodajWiersz() {
-    const tabela = document.querySelector(".tabela-programu tbody");
-    const nowy = document.createElement("tr");
-    nowy.innerHTML = '<td contenteditable="true"></td>';
-    tabela.appendChild(nowy);
-}
-function usunWiersz() {
-    const tabela = document.querySelector(".tabela-programu tbody");
-    if (tabela.rows.length > 1) {
-        tabela.deleteRow(-1);
-    }
-}
+
