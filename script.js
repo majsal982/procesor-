@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // LOGIKA PROCESORA
 
 const processor = {
@@ -59,7 +59,7 @@ render('input');
 render('output');
 //tasma kon
 
-<<<<<<< HEAD
+
 // pamiec po
 
 const RAM_SIZE = 512;
@@ -163,7 +163,7 @@ render();
 // --- GLOBALNY STAN MASZYNY ---
 =======
 // --- STAN GLOBALNY ---
->>>>>>> 30972e06b80774701a24f49aaa63b00fbb3f7ed7
+
 const RAM = {
     registers: Array(512).fill(null),
     program: [],
@@ -261,8 +261,4 @@ window.onload = () => {
     renderMemory();
     renderTape('input');
 };
-<<<<<<< HEAD
-
->>>>>>> 22c5ecf4da213e5adb6af9eace386eda0c9a4872
-=======
->>>>>>> 30972e06b80774701a24f49aaa63b00fbb3f7ed7
+<
