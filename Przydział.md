@@ -9,7 +9,7 @@ pamięć: Liliana Szoszew - lilaaa1234
 
 wejscie i wyjscie : Beata Chycka - Becia123
 
-proces (lewy gorny róg) : Igor Brzeziński- SeishiUmaiIB
+proces, szkielet HTML (lewy gorny róg) : Igor Brzeziński- SeishiUmaiIB
 
 git config --global user.name "Twoja Nazwa Użytkownika"
 git config --global user.email "twoj.email@example.com"
