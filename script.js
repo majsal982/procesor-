@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // LOGIKA PROCESORA
 
 const processor = {
@@ -160,82 +161,85 @@ render();
 
 ////js linijek Mai//
 // --- GLOBALNY STAN MASZYNY ---
+=======
+// --- STAN GLOBALNY ---
+>>>>>>> 30972e06b80774701a24f49aaa63b00fbb3f7ed7
 const RAM = {
-    registers: Array(512).fill(null), // null oznacza "?" w pamięci
-    program: [],         // Tu przechowujemy instrukcje
-    currentLine: 0,      // Wskaźnik instrukcji (IP)
+    registers: Array(512).fill(null),
+    program: [],
+    currentLine: 0,
     isRunning: false,
-    interval: null
+    interval: null,
+    input: [],
+    output: [],
+    headIn: 0,
+    headOut: 0
 };
 
-// --- LOGIKA EDYTORA (Twoja część) ---
+// --- LOGIKA EDYTORA & PAMIĘCI ---
 function addRow() {
     const tbody = document.getElementById('editor-body');
-    if (!tbody) return;
     const ln = tbody.children.length + 1;
     const tr = document.createElement('tr');
     tr.innerHTML = `
-        <td class="col-ln">${ln}</td>
-        <td><input type="text" class="cell-label"></td>
-        <td>
-            <select class="cell-instr">
-                <option value=""></option>
-                <option value="READ">READ</option>
-                <option value="WRITE">WRITE</option>
-                <option value="LOAD">LOAD</option>
-                <option value="STORE">STORE</option>
-                <option value="ADD">ADD</option>
-                <option value="SUB">SUB</option>
-                <option value="MULT">MULT</option>
-                <option value="DIV">DIV</option>
-                <option value="JUMP">JUMP</option>
-                <option value="JZERO">JZERO</option>
-                <option value="JGTZ">JGTZ</option>
-                <option value="HALT">HALT</option>
-            </select>
-        </td>
-        <td><input type="text" class="cell-arg"></td>
-        <td><input type="text"></td>
-        <td class="col-stats stats-col hidden">0</td>
-        <td class="col-stats stats-col hidden">0%</td>
+        <td style="background:#e0e0e0; text-align:center;">${ln}</td>
+        <td><input type="text" class="cell-label" style="width:95%"></td>
+        <td><select class="cell-instr" style="width:100%">
+            <option value=""></option>
+            <option value="LOAD">LOAD</option><option value="STORE">STORE</option>
+            <option value="ADD">ADD</option><option value="SUB">SUB</option>
+            <option value="MULT">MULT</option><option value="DIV">DIV</option>
+            <option value="READ">READ</option><option value="WRITE">WRITE</option>
+            <option value="JUMP">JUMP</option><option value="JZERO">JZERO</option>
+            <option value="JGTZ">JGTZ</option><option value="HALT">HALT</option>
+        </select></td>
+        <td><input type="text" class="cell-arg" style="width:95%"></td>
+        <td><input type="text" style="width:95%"></td>
     `;
     tbody.appendChild(tr);
 }
 
-// Pobieranie programu z tabeli do tablicy RAM.program
-function syncProgram() {
-    const rows = document.querySelectorAll('#editor-body tr');
-    RAM.program = Array.from(rows).map(row => ({
-        label: row.querySelector('.cell-label').value.trim(),
-        instr: row.querySelector('.cell-instr').value,
-        arg: row.querySelector('.cell-arg').value.trim()
-    }));
+function renderMemory() {
+    const tbody = document.querySelector("#ramTable tbody");
+    tbody.innerHTML = "";
+    for (let i = 0; i < 15; i++) {
+        tbody.innerHTML += `<tr><td style="background:#e3f2fd">${i}</td><td>${RAM.registers[i] ?? '?'}</td></tr>`;
+    }
 }
 
-// Wykonanie jednego kroku (Step)
+// --- LOGIKA TAŚM ---
+function addToIn() {
+    let v = document.getElementById('val-in').value;
+    if(v!=="") { RAM.input.push(v); renderTape('input'); }
+}
+
+function renderTape(type) {
+    const strip = document.getElementById(`${type}-strip`);
+    if (!strip) return;
+    strip.innerHTML = '';
+    for(let i=0; i<10; i++) {
+        strip.innerHTML += `<div class="komorka" style="border:1px solid gray; min-width:30px; text-align:center; background:white;">${RAM.input[i]||''}</div>`;
+    }
+}
+
+// --- STEROWANIE ---
 function step() {
-    syncProgram();
     const rows = document.querySelectorAll('#editor-body tr');
-    
-    if (RAM.currentLine >= RAM.program.length) {
-        stop();
-        return;
-    }
+    if (RAM.currentLine >= rows.length) return stop();
 
-    // Podświetlenie linii
     rows.forEach(r => r.style.background = "");
-    rows[RAM.currentLine].style.background = "#ffffcc";
+    const currentRow = rows[RAM.currentLine];
+    currentRow.style.background = "#ffffcc";
 
-    const currentOp = RAM.program[RAM.currentLine];
-    console.log("Procesor wykonuje:", currentOp.instr, currentOp.arg);
+    const instr = currentRow.querySelector('.cell-instr').value;
+    const arg = currentRow.querySelector('.cell-arg').value;
 
-    // --- MIEJSCE NA LOGIKĘ KOLEGÓW (Procesor) ---
-    // Przykład prostej inkrementacji (jeśli nie ma skoku):
-    if (currentOp.instr === "HALT") {
-        stop();
-    } else {
-        RAM.currentLine++;
-    }
+    // Aktualizacja wizualna procesora
+    document.getElementById('instruction').value = instr;
+    document.getElementById('argument').value = arg;
+
+    if (instr === "HALT") stop();
+    else RAM.currentLine++;
 }
 
 function runAuto() {
@@ -248,24 +252,17 @@ function stop() {
     clearInterval(RAM.interval);
     RAM.isRunning = false;
     RAM.currentLine = 0;
-    alert("Program zakończony");
+    document.getElementById('p-footer').innerText = "Zatrzymano.";
 }
 
-// --- LOGIKA PAMIĘCI (Twoja druga część) ---
-function renderMemory() {
-    const tbody = document.querySelector("#ramTable tbody");
-    if (!tbody) return;
-    tbody.innerHTML = "";
-    for (let i = 0; i < 10; i++) { // pokazujemy 10 pierwszych komórek
-        const val = RAM.registers[i];
-        tbody.innerHTML += `<tr><td class="addrShade">${i}</td><td>${val === null ? '?' : val}</td></tr>`;
-    }
-}
-
-// Inicjalizacja po załadowaniu wszystkiego
+// Start
 window.onload = () => {
-    for(let i=0; i<8; i++) addRow();
+    for(let i=0; i<10; i++) addRow();
     renderMemory();
+    renderTape('input');
 };
+<<<<<<< HEAD
 
 >>>>>>> 22c5ecf4da213e5adb6af9eace386eda0c9a4872
+=======
+>>>>>>> 30972e06b80774701a24f49aaa63b00fbb3f7ed7

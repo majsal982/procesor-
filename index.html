@@ -17,34 +17,64 @@
       Argument: <input type="text" readonly>
       </div>
       <!-- Połączenie pamięci !! -->
-    <div id="pamiec-kontener">
-        <object data="pamiec.html" type="text/html" style="width: 250px; height: 600px;"></object>
-    </div>
-
- 
-  
-  
-      
+     <div id="pamiec-kontener" style="padding: 10px;">
+        <h3>MEMORY</h3>
+        <!-- Tabela pamięci zostanie wygenerowana tutaj -->
+        <table id="ramTable" border="1" style="width:100%; border-collapse: collapse; background: white; text-align: center;">
+            <thead style="background: #2c3e50; color: white;">
+                <tr><th>Addr</th><th>Val</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
     </section>
+<<<<<<< HEAD
+=======
     <div id="paseczek-kolor"></div>
- <object data="123.html" type=""></object>
+ <object data="123.html" type="text/html" style="width: 82%; height: 270px;""></object>
   
       </div>
       <!-- W sekcji "lewy" pod procesorem -->
    
+>>>>>>> 35ca9a85064bba98c79b795a1719903c7ca4a18f
 
-    <!-- W sekcji "prawy" na samym dole -->
-    <div id="linijki-kontener">
-      <!-- Panel sterowania -->
-      <div style="padding: 10px; background: #eee; border: 1px solid #ccc;">
-          <button onclick="step()">KROK PO KROKU</button>
-          <button onclick="runAuto()" style="background: lightgreen;">AUTO (START)</button>
-          <button onclick="stop()" style="background: lightcoral;">STOP / RESET</button>
-          <button onclick="addRow()">+ DODAJ LINIE</button>
+    <div id="paseczek-kolor"></div>
+
+    <section id="prawy">
+      <!-- TAŚMY (Górna część prawego panelu) -->
+      <div id="tasmy-miejsce" style="background: #ddd; padding: 10px; margin-bottom: 10px;">
+          <div class="tasma-wejscie">
+              <div class="p-ts">WEJŚCIE</div>
+              <div id="input-head" class="strzalka">▼</div>
+              <div id="input-strip" class="kom-ts"></div>
+              <div id="input-numbers" class="numeracja"></div>
+              <input type="number" id="val-in" placeholder="liczba">
+              <button onclick="addToIn()">DODAJ</button>
+          </div>
       </div>
-      <!-- Wczytujemy edytor -->
-      <object data="linijki.html" type="text/html" id="obj-edytor" style="width:100%; height:400px;"></object>
-    </div>
+
+      <!-- EDYTOR (Dolna część prawego panelu) -->
+      <div id="linijki-kontener" style="background: white; padding: 10px;">
+        <div id="panel-sterowania" style="margin-bottom: 5px;">
+            <button onclick="step()">KROK PO KROKU</button>
+            <button onclick="runAuto()" style="background: lightgreen;">AUTO (START)</button>
+            <button onclick="stop()" style="background: lightcoral;">STOP / RESET</button>
+            <button onclick="addRow()">+ DODAJ LINIE</button>
+        </div>
+        
+        <table id="ram-table" border="1" style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #b8d9e9;">
+                <tr>
+                    <th style="width: 40px;">LN</th>
+                    <th>Label</th>
+                    <th>Instruction</th>
+                    <th>Argument</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody id="editor-body"></tbody>
+        </table>
+      </div>
     </section>
   </main>
   <footer>
