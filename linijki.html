@@ -40,60 +40,6 @@
     </table>
 </div>
 
-<script>
-    const instructions = ["", "READ", "WRITE", "LOAD", "STORE", "ADD", "SUB", "MULT", "DIV", "JUMP", "JZERO", "JGTZ", "HALT"];
-    const tbody = document.getElementById('editor-body');
-    let lineCount = 0;
-
-    function createRow() {
-        lineCount++;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td class="col-ln">${lineCount}</td>
-            <td><input type="text" class="cell-label"></td>
-            <td>
-                <select class="cell-instr">
-                    ${instructions.map(i => `<option value="${i}">${i}</option>`).join('')}
-                </select>
-            </td>
-            <td><input type="text" class="cell-arg"></td>
-            <td><input type="text"></td>
-            <td class="col-stats stats-col hidden">0</td>
-            <td class="col-stats stats-col hidden">0.000%</td>
-        `;
-        
-        // Obsługa Enter i Tab
-        tr.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                createRow();
-                tbody.lastElementChild.querySelector('input').focus();
-            }
-        });
-        
-        tbody.appendChild(tr);
-    }
-
-    // Skróty klawiszowe Ctrl+6, Ctrl+7
-    window.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && (e.key === '6' || e.key === '7')) {
-            e.preventDefault();
-            document.querySelectorAll('.stats-col').forEach(el => el.classList.toggle('hidden'));
-        }
-    });
-
-    // Inicjalizacja (10 wierszy na start)
-    for(let i=0; i<10; i++) createRow();
-
-    // Funkcja do pobierania danych dla kolegi od procesora
-    function getProgramData() {
-        const rows = document.querySelectorAll('#editor-body tr');
-        return Array.from(rows).map(row => ({
-            label: row.querySelector('.cell-label').value,
-            instr: row.querySelector('.cell-instr').value,
-            arg: row.querySelector('.cell-arg').value
-        }));
-    }
-</script>
+<script src="script.js"></script>
 </body>
 </html>
