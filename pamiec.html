@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Kontrolka RAM</title>
+<style>
+   body {
+        font-family: Arial;
+        background: #eef2f5;
+        padding: 20px;
+    }
+
+    #blok{
+        width:200px;
+        text-align: center;
+    }
+
+    #ramtable {
+        border-collapse: collapse;
+        margin: 20px auto;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+  th, td {
+        padding: 10px 20px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    th {
+        background: #2c3e50;
+        color: white;
+    }
+
+    .acc {
+        background: #ffd54f;
+        font-weight: bold;
+    }
+
+    .unknown {
+        background: #ccc;
+        color: #555;
+    }
+
+    .addrShade {
+        background: linear-gradient(to right, #e3f2fd, #90caf9);
+    }
+
+    button {
+        padding: 10px 15px;
+        margin: 5px;
+        border: none;
+        background: #3498db;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #2980b9;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        margin: 15% auto;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    input {
+        padding: 8px;
+        width: 80%;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div id="blok"> 
+
+<table id="ramTable">
+    <thead>
+        <tr>
+            <th>Address</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<div>
+    <button onclick="scrollUp()">⬆</button>
+    <button onclick="scrollDown()">⬇</button>
+    <br><br>
+    <button onclick="openModal()">Show Address</button>
+</div>
+
+
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h3>Show Address</h3>
+        <input type="number" id="modalInput" placeholder="Podaj adres">
+        <br>
+        <button onclick="goToAddress()">Go!</button>
+        <button onclick="closeModal()">Anuluj</button>
+    </div>
+</div>
+
+</div>
+<script>
+const RAM_SIZE = 512;
+const VIEW_SIZE = 10;
+
+let start = 0;
+
+let memory = Array.from({length: RAM_SIZE}, () => {
+    return Math.random() > 0.5 ? Math.floor(Math.random()*100) : null;
+});
+
+function render() {
+    const tbody = document.querySelector("#ramTable tbody");
+    tbody.innerHTML = "";
+
+    for (let i = 0; i < VIEW_SIZE; i++) {
+        let addr = start + i;
+        if (addr >= RAM_SIZE) break;
+
+        let tr = document.createElement("tr");
+        let tdAddr = document.createElement("td");
+        let tdVal = document.createElement("td");
+
+        tdAddr.textContent = addr;
+        tdAddr.classList.add("addrShade");
+
+        if (addr === 0) {
+            tdAddr.classList.add("acc");
+            tdVal.classList.add("acc");
+        }
+
+        let val = memory[addr];
+
+        if (val === null) {
+            tdVal.textContent = "?";
+            tdVal.classList.add("unknown");
+        } else {
+            tdVal.textContent = val;
+        }
+
+        tdVal.onclick = () => {
+            let newVal = prompt("Nowa wartość:");
+            if (newVal === null) return;
+
+            memory[addr] = newVal === "" ? null : parseInt(newVal);
+            render();
+        };
+
+        tr.appendChild(tdAddr);
+        tr.appendChild(tdVal);
+        tbody.appendChild(tr);
+    }
+}
+
+function scrollUp() {
+    if (start > 0) {
+        start--;
+        render();
+    }
+}
+
+function scrollDown() {
+    if (start < RAM_SIZE - VIEW_SIZE) {
+        start++;
+        render();
+    }
+}
+
+
+function openModal() {
+    document.getElementById("modal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+function goToAddress() {
+    let val = parseInt(document.getElementById("modalInput").value);
+
+    if (!isNaN(val) && val >= 0 && val < RAM_SIZE) {
+        start = val;
+        render();
+        closeModal();
+    } else {
+        alert("Niepoprawny adres!");
+    }
+}
+
+window.onclick = function(e) {
+    let modal = document.getElementById("modal");
+    if (e.target === modal) {
+        closeModal();
+    }
+};
+
+render();
+</script>
+
+</body>
+</html>
