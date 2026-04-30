@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>tas</title>
+   <style>
+    body { background: #9bb4ff; font-family: Tahoma; padding: 20px; }
+
+.tape-wrapper {
+    background: #cbd5ff;
+    border: 1px solid #808080;
+    padding: 10px;
+    width: 440px;
+    margin: 20px auto;
+}
+.tape-row { display: flex; align-items: center; justify-content: center; }
+.cells-viewport, .num-viewport {
+    width: 300px; 
+    overflow: hidden;
+    position: relative;
+}
+.cells-viewport {
+    height: 34px;
+    background: #9bb4ff;
+    border: 2px solid #555;
+}
+.num-viewport {
+    height: 18px;
+    margin-left: 70px; 
+}
+.cells-strip, .num-line {
+    display: flex;
+    position: absolute;
+    left: 0;
+    transition: transform 0.2s ease;
+}
+.komorka {
+    min-width: 58px; height: 28px; background: white;
+    border: 1px solid #000; text-align: center; line-height: 28px; font-weight: bold;
+}
+.komorka.active { background: #ffffcc; }
+
+.num-box {
+    min-width: 60px; text-align: center; font-size: 10px; font-weight: bold;
+}
+.head-arrow {
+    margin-left: 100px; width: 20px; color: orange; font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.nav button { width: 30px; height: 38px; cursor: pointer; background: #ece9d8; }
+.label { text-align: center; font-weight: bold; margin: 5px; }
+.add-box { text-align: center; margin-top: 10px; }
+   </style>
+</head>
+<body>
+    <div class="tape-wrapper">
+        <div class="num-viewport">
+            <div id="input-numbers" class="num-line"></div>
+        </div>
+        <div id="input-head" class="head-arrow">▼</div>
+        <div class="tape-row">
+            <div class="nav">
+                <button onclick="scrollT('input', 'start')">⏮</button>
+                <button onclick="scrollT('input', -1)">◀</button>
+            </div>
+            <div class="cells-viewport">
+                <div id="input-strip" class="cells-strip"></div>
+            </div>
+            <div class="nav">
+                <button onclick="scrollT('input', 1)">▶</button>
+            </div>
+        </div>
+        <div class="label">WEJŚCIE</div>
+        <div class="add-box">
+            <input type="number" id="val-in" placeholder="Liczba">
+            <button onclick="addToIn()">DODAJ</button>
+        </div>
+    </div>
+    <div class="tape-wrapper">
+        <div class="label">WYJŚCIE</div>
+        <div id="output-head" class="head-arrow">▲</div>
+        <div class="tape-row">
+            <div class="nav">
+                <button onclick="scrollT('output', 'start')">⏮</button>
+                <button onclick="scrollT('output', -1)">◀</button>
+            </div>
+            <div class="cells-viewport">
+                <div id="output-strip" class="cells-strip"></div>
+            </div>
+            <div class="nav">
+                <button onclick="scrollT('output', 1)">▶</button>
+            </div>
+        </div>
+        <div class="num-viewport">
+            <div id="output-numbers" class="num-line"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

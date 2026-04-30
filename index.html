@@ -27,63 +27,24 @@
       
     </section>
     <div id="paseczek-kolor"></div>
-    <section id="prawy">
-       <div class="tasma-wejscie">
-            <div class="numeracja"></div>
-            <div class="strzalka" >▼</div>
-            <div class="kom-ts">
-                <button class="przycisk">«</button>
-                <button class="przycisk">‹</button>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <button class="przycisk">›</button>
-            </div>
-            <div class="p-ts">WEJŚCIE</div>
-            <div>
-                <input type="number" id="nowaWartosc" placeholder="liczba">
-                <button onclick="dodaj()">DODAJ</button>
-            </div>
-        </div>
-              <div class="p-ts">WEJŚCIE</div>
-          </div>
-          <div class="tasma-wyjscie">
-          <div class="p-ts">WYJŚCIE</div>
-            <div class="kom-ts">
-                <button class="przycisk">«</button>
-                <button class="przycisk">‹</button>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <div class="komorka"></div>
-                <button class="przycisk">›</button>
-            </div>
-            <div class="strzalka" >▲</div>
-            <div class="numeracja" ></div>
-        </div>
+ <object data="123.html" type=""></object>
+  
       </div>
-    <!--linijki polaczenie!!-->
-      <!--linijki polaczenie!!-->
-    <div id="linijki">
-        <object data="linijki.html" type="text/html" style="width: 100%; height: 500px;"></object>
-    </div>
+      <!-- W sekcji "lewy" pod procesorem -->
+   
 
-        <iframe src="linijki.html" style="width: 100%; height: 400px; border: none; overflow: auto;"></iframe>
+    <!-- W sekcji "prawy" na samym dole -->
+    <div id="linijki-kontener">
+      <!-- Panel sterowania -->
+      <div style="padding: 10px; background: #eee; border: 1px solid #ccc;">
+          <button onclick="step()">KROK PO KROKU</button>
+          <button onclick="runAuto()" style="background: lightgreen;">AUTO (START)</button>
+          <button onclick="stop()" style="background: lightcoral;">STOP / RESET</button>
+          <button onclick="addRow()">+ DODAJ LINIE</button>
+      </div>
+      <!-- Wczytujemy edytor -->
+      <object data="linijki.html" type="text/html" id="obj-edytor" style="width:100%; height:400px;"></object>
     </div>
-
-    <script>
-        // Ta funkcja pozwoli Twoim kolegom pobrać dane z Twojego edytora w przyszłości
-        function pobierzDaneZEdytora() {
-            const frame = document.querySelector('#linijki iframe');
-            if (frame && frame.contentWindow.getProgramData) {
-                return frame.contentWindow.getProgramData();
-            }
-            return null;
-        }
-    </script>
     </section>
   </main>
   <footer>
