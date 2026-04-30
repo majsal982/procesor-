@@ -17,7 +17,7 @@
       Argument: <input type="text" readonly>
       </div>
   
-  ghghg
+ 
   
   
       
@@ -61,7 +61,32 @@
             <div class="numeracja" ></div>
         </div>
       </div>
-    
+    <!--linijki polaczenie!!-->
+      <div id="linijki">Ładowanie edytora...</div>
+
+      <script>
+          fetch('plik.html')
+              .then(response => {
+                  if (!response.ok) throw new Error('Nie znaleziono pliku plik.html');
+                  return response.text();
+              })
+              .then(data => {
+                  const container = document.getElementById('linijki');
+                  container.innerHTML = data;
+              
+                  // To uruchomi skrypty zawarte w Twoim pliku edytora
+                  const scripts = container.querySelectorAll('script');
+                  scripts.forEach(oldScript => {
+                      const newScript = document.createElement('script');
+                      newScript.textContent = oldScript.textContent;
+                      document.body.appendChild(newScript);
+                  });
+              })
+              .catch(err => {
+                  document.getElementById('linijki').innerHTML = "Błąd ładowania: " + err.message;
+              });
+      </script>
+
     </section>
   </main>
   <footer>
