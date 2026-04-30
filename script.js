@@ -10,14 +10,16 @@ const RAM = {
   interval: null,
   input: [],
   output: [],
+  inputHead: 0,
+  outputHead: 0,
   memoryViewStart: 0
 };
 
 function init() {
   for (let i = 0; i < 10; i++) addRow();
   renderMemory();
-  renderInputTape();
-  renderOutputTape();
+  renderTape('input');
+  renderTape('output');
   renderProcessor();
   document.getElementById('p-footer').innerText = 'Gotowe.';
 }
@@ -125,24 +127,50 @@ function goToAddress() {
   }
 }
 
-function renderInputTape() {
-  const strip = document.getElementById('input-strip');
+function renderTape(type) {
+  const strip = document.getElementById(`${type}-strip`);
   if (!strip) return;
   strip.innerHTML = '';
+  const values = type === 'input' ? RAM.input : RAM.output;
+  const headIndex = type === 'input' ? RAM.inputHead : RAM.outputHead;
+
   for (let i = 0; i < 10; i++) {
-    const value = RAM.input[i] ?? '';
-    strip.innerHTML += `<div class="komorka" style="border:1px solid gray; min-width:40px; text-align:center; background:white;">${value}</div>`;
+    const value = values[i] ?? '';
+    const activeClass = i === headIndex ? ' active-cell' : '';
+    strip.innerHTML += `<div class="komorka${activeClass}">${value}</div>`;
   }
+  positionHead(type);
 }
 
-function renderOutputTape() {
-  const strip = document.getElementById('output-strip');
-  if (!strip) return;
-  strip.innerHTML = '';
-  for (let i = 0; i < 10; i++) {
-    const value = RAM.output[i] ?? '';
-    strip.innerHTML += `<div class="komorka" style="border:1px solid gray; min-width:40px; text-align:center; background:white;">${value}</div>`;
-  }
+function positionHead(type) {
+  const arrow = document.getElementById(`${type}-head`);
+  const strip = document.getElementById(`${type}-strip`);
+  if (!arrow || !strip || !strip.children.length) return;
+  const headIndex = type === 'input' ? RAM.inputHead : RAM.outputHead;
+  const index = Math.min(headIndex, strip.children.length - 1);
+  const cell = strip.children[index];
+  if (!cell) return;
+
+  const containerRect = arrow.parentElement.getBoundingClientRect();
+  const cellRect = cell.getBoundingClientRect();
+  const arrowWidth = arrow.offsetWidth || 20;
+  const x = cellRect.left - containerRect.left + (cellRect.width - arrowWidth) / 2;
+  arrow.style.transform = `translateX(${x}px)`;
+}
+
+function animateExecution(fromElement, toElement) {
+  if (!fromElement || !toElement) return;
+  const exec = document.createElement('div');
+  exec.className = 'exec-box';
+  const fromRect = fromElement.getBoundingClientRect();
+  const toRect = toElement.getBoundingClientRect();
+  exec.style.left = `${fromRect.left + fromRect.width / 2 - 10}px`;
+  exec.style.top = `${fromRect.top + fromRect.height / 2 - 10}px`;
+  document.body.appendChild(exec);
+  requestAnimationFrame(() => {
+    exec.style.transform = `translate(${toRect.left - fromRect.left}px, ${toRect.top - fromRect.top}px)`;
+  });
+  setTimeout(() => exec.remove(), 500);
 }
 
 function addToIn() {
@@ -150,7 +178,7 @@ function addToIn() {
   if (inputValue === '') return;
   RAM.input.push(inputValue);
   document.getElementById('val-in').value = '';
-  renderInputTape();
+  renderTape('input');
 }
 
 function loadProgram() {
@@ -246,9 +274,12 @@ function executeStep() {
     case 'READ': {
       const addr = resolveMemoryAddress(arg);
       if (addr !== null) {
-        const nextValue = RAM.input.length > 0 ? Number(RAM.input.shift()) : null;
-        RAM.registers[addr] = Number.isNaN(nextValue) ? null : nextValue;
-        renderInputTape();
+        const nextValue = RAM.input[RAM.inputHead] ?? null;
+        const inputCell = document.querySelector(`#input-strip .komorka:nth-child(${Math.min(RAM.inputHead + 1, 10)})`);
+        animateExecution(instruction.row, inputCell);
+        RAM.registers[addr] = Number.isNaN(Number(nextValue)) ? null : Number(nextValue);
+        RAM.inputHead = Math.min(RAM.inputHead + 1, 9);
+        renderTape('input');
       }
       break;
     }
@@ -256,7 +287,10 @@ function executeStep() {
       const addr = resolveMemoryAddress(arg);
       const value = addr === null ? RAM.registers[0] ?? 0 : RAM.registers[addr] ?? 0;
       RAM.output.push(value);
-      renderOutputTape();
+      RAM.outputHead = Math.min(RAM.output.length - 1, 9);
+      const outputCell = document.querySelector(`#output-strip .komorka:nth-child(${Math.min(RAM.outputHead + 1, 10)})`);
+      animateExecution(instruction.row, outputCell);
+      renderTape('output');
       break;
     }
     case 'JUMP': {
