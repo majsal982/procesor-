@@ -10,7 +10,7 @@ body{
 }
 
 main{
-    background-color: var(--background-main);
+    background-color: var(--background-main-footer);
     width: calc(100% - 20px);
     height: 900px;
     padding-left: 20px;
@@ -67,7 +67,7 @@ h3{
 
 footer{
     width: 100%;
-    background-color: rgb(155, 155, 155);
+    background-color: var(--background-main-footer);
     margin-top: 0px;
     text-align: center;
     height: 28px;
