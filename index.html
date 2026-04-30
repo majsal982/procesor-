@@ -64,29 +64,20 @@
     <!--linijki polaczenie!!-->
       <div id="linijki">Ładowanie edytora...</div>
 
-      <script>
-          fetch('plik.html')
-              .then(response => {
-                  if (!response.ok) throw new Error('Nie znaleziono pliku plik.html');
-                  return response.text();
-              })
-              .then(data => {
-                  const container = document.getElementById('linijki');
-                  container.innerHTML = data;
-              
-                  // To uruchomi skrypty zawarte w Twoim pliku edytora
-                  const scripts = container.querySelectorAll('script');
-                  scripts.forEach(oldScript => {
-                      const newScript = document.createElement('script');
-                      newScript.textContent = oldScript.textContent;
-                      document.body.appendChild(newScript);
-                  });
-              })
-              .catch(err => {
-                  document.getElementById('linijki').innerHTML = "Błąd ładowania: " + err.message;
-              });
-      </script>
+        <div id="linijki">
+        <iframe src="plik.html" style="width: 100%; height: 400px; border: none; overflow: auto;"></iframe>
+    </div>
 
+    <script>
+        // Ta funkcja pozwoli Twoim kolegom pobrać dane z Twojego edytora w przyszłości
+        function pobierzDaneZEdytora() {
+            const frame = document.querySelector('#linijki iframe');
+            if (frame && frame.contentWindow.getProgramData) {
+                return frame.contentWindow.getProgramData();
+            }
+            return null;
+        }
+    </script>
     </section>
   </main>
   <footer>
