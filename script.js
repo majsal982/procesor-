@@ -58,3 +58,114 @@ render('input');
 render('output');
 //tasma kon
 
+
+////js linijek Mai//
+// --- GLOBALNY STAN MASZYNY ---
+const RAM = {
+    registers: Array(512).fill(null), // null oznacza "?" w pamięci
+    program: [],         // Tu przechowujemy instrukcje
+    currentLine: 0,      // Wskaźnik instrukcji (IP)
+    isRunning: false,
+    interval: null
+};
+
+// --- LOGIKA EDYTORA (Twoja część) ---
+function addRow() {
+    const tbody = document.getElementById('editor-body');
+    if (!tbody) return;
+    const ln = tbody.children.length + 1;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td class="col-ln">${ln}</td>
+        <td><input type="text" class="cell-label"></td>
+        <td>
+            <select class="cell-instr">
+                <option value=""></option>
+                <option value="READ">READ</option>
+                <option value="WRITE">WRITE</option>
+                <option value="LOAD">LOAD</option>
+                <option value="STORE">STORE</option>
+                <option value="ADD">ADD</option>
+                <option value="SUB">SUB</option>
+                <option value="MULT">MULT</option>
+                <option value="DIV">DIV</option>
+                <option value="JUMP">JUMP</option>
+                <option value="JZERO">JZERO</option>
+                <option value="JGTZ">JGTZ</option>
+                <option value="HALT">HALT</option>
+            </select>
+        </td>
+        <td><input type="text" class="cell-arg"></td>
+        <td><input type="text"></td>
+        <td class="col-stats stats-col hidden">0</td>
+        <td class="col-stats stats-col hidden">0%</td>
+    `;
+    tbody.appendChild(tr);
+}
+
+// Pobieranie programu z tabeli do tablicy RAM.program
+function syncProgram() {
+    const rows = document.querySelectorAll('#editor-body tr');
+    RAM.program = Array.from(rows).map(row => ({
+        label: row.querySelector('.cell-label').value.trim(),
+        instr: row.querySelector('.cell-instr').value,
+        arg: row.querySelector('.cell-arg').value.trim()
+    }));
+}
+
+// Wykonanie jednego kroku (Step)
+function step() {
+    syncProgram();
+    const rows = document.querySelectorAll('#editor-body tr');
+    
+    if (RAM.currentLine >= RAM.program.length) {
+        stop();
+        return;
+    }
+
+    // Podświetlenie linii
+    rows.forEach(r => r.style.background = "");
+    rows[RAM.currentLine].style.background = "#ffffcc";
+
+    const currentOp = RAM.program[RAM.currentLine];
+    console.log("Procesor wykonuje:", currentOp.instr, currentOp.arg);
+
+    // --- MIEJSCE NA LOGIKĘ KOLEGÓW (Procesor) ---
+    // Przykład prostej inkrementacji (jeśli nie ma skoku):
+    if (currentOp.instr === "HALT") {
+        stop();
+    } else {
+        RAM.currentLine++;
+    }
+}
+
+function runAuto() {
+    if (RAM.isRunning) return;
+    RAM.isRunning = true;
+    RAM.interval = setInterval(step, 500);
+}
+
+function stop() {
+    clearInterval(RAM.interval);
+    RAM.isRunning = false;
+    RAM.currentLine = 0;
+    alert("Program zakończony");
+}
+
+// --- LOGIKA PAMIĘCI (Twoja druga część) ---
+function renderMemory() {
+    const tbody = document.querySelector("#ramTable tbody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    for (let i = 0; i < 10; i++) { // pokazujemy 10 pierwszych komórek
+        const val = RAM.registers[i];
+        tbody.innerHTML += `<tr><td class="addrShade">${i}</td><td>${val === null ? '?' : val}</td></tr>`;
+    }
+}
+
+// Inicjalizacja po załadowaniu wszystkiego
+window.onload = () => {
+    for(let i=0; i<8; i++) addRow();
+    renderMemory();
+};
+
