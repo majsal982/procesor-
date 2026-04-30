@@ -1,7 +1,7 @@
 :root{
     --border-processor: bisque;
     --background-processor: beige;
-    --background-main: rgb(155, 155, 155);
+    --background-main-footer: rgb(155, 155, 155);
     --background-lewy-prawy: rgb(94, 45, 255);
 }
 
