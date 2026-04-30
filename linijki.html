@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; background: #f0f0f0; }
+        .editor-container { width: 95%; margin: 20px auto; background: white; border: 1px solid #99b8d1; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        th { background: #b8d9e9; border: 1px solid #99b8d1; padding: 5px; font-size: 12px; }
+        td { border: 1px solid #d3d3d3; height: 25px; padding: 0; }
+        
+        /* Kolumny LN, EC, EP mają szare tło jak na screenie */
+        .col-stats, .col-ln { background: #e0e0e0; text-align: center; font-size: 11px; }
+        
+        input, select { width: 100%; height: 100%; border: none; outline: none; padding: 0 5px; box-sizing: border-box; }
+        input:focus { background: #e8f4ff; }
+        
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="editor-container">
+    <table id="ram-table">
+        <thead>
+            <tr>
+                <th style="width: 40px;">LN</th>
+                <th>Label</th>
+                <th>Instruction</th>
+                <th>Argument</th>
+                <th>Comment</th>
+                <th class="stats-col hidden" style="width: 60px;">EC</th>
+                <th class="stats-col hidden" style="width: 60px;">EP</th>
+            </tr>
+        </thead>
+        <tbody id="editor-body">
+            <!-- Wiersze będą generowane przez JS -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const instructions = ["", "READ", "WRITE", "LOAD", "STORE", "ADD", "SUB", "MULT", "DIV", "JUMP", "JZERO", "JGTZ", "HALT"];
+    const tbody = document.getElementById('editor-body');
+    let lineCount = 0;
+
+    function createRow() {
+        lineCount++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="col-ln">${lineCount}</td>
+            <td><input type="text" class="cell-label"></td>
+            <td>
+                <select class="cell-instr">
+                    ${instructions.map(i => `<option value="${i}">${i}</option>`).join('')}
+                </select>
+            </td>
+            <td><input type="text" class="cell-arg"></td>
+            <td><input type="text"></td>
+            <td class="col-stats stats-col hidden">0</td>
+            <td class="col-stats stats-col hidden">0.000%</td>
+        `;
+        
+        // Obsługa Enter i Tab
+        tr.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                createRow();
+                tbody.lastElementChild.querySelector('input').focus();
+            }
+        });
+        
+        tbody.appendChild(tr);
+    }
+
+    // Skróty klawiszowe Ctrl+6, Ctrl+7
+    window.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && (e.key === '6' || e.key === '7')) {
+            e.preventDefault();
+            document.querySelectorAll('.stats-col').forEach(el => el.classList.toggle('hidden'));
+        }
+    });
+
+    // Inicjalizacja (10 wierszy na start)
+    for(let i=0; i<10; i++) createRow();
+
+    // Funkcja do pobierania danych dla kolegi od procesora
+    function getProgramData() {
+        const rows = document.querySelectorAll('#editor-body tr');
+        return Array.from(rows).map(row => ({
+            label: row.querySelector('.cell-label').value,
+            instr: row.querySelector('.cell-instr').value,
+            arg: row.querySelector('.cell-arg').value
+        }));
+    }
+</script>
+</body>
+</html>
