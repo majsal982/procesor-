@@ -157,11 +157,7 @@ window.onclick = function(e) {
 render();
 
 //pamiec kon
-=======
 
-////js linijek Mai//
-// --- GLOBALNY STAN MASZYNY ---
-=======
 // --- STAN GLOBALNY ---
 
 const RAM = {
@@ -261,4 +257,3 @@ window.onload = () => {
     renderMemory();
     renderTape('input');
 };
-<
