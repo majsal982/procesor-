@@ -13,8 +13,8 @@
     <section id="lewy">
       <div id="processor">
       <h3>PROCESSOR</h3>
-      Instruction: <input type="text" readonly><br><br>
-      Argument: <input type="text" readonly>
+      Instruction: <input id="instruction" type="text" readonly><br><br>
+      Argument: <input id="argument" type="text" readonly>
       </div>
       <!-- Połączenie pamięci !! -->
      <div id="pamiec-kontener" style="padding: 10px;">
@@ -41,6 +41,12 @@
               <div id="input-numbers" class="numeracja"></div>
               <input type="number" id="val-in" placeholder="liczba">
               <button onclick="addToIn()">DODAJ</button>
+          </div>
+          <div class="tasma-wejscie" style="margin-top: 10px;">
+              <div class="p-ts">WYJŚCIE</div>
+              <div id="output-head" class="strzalka">▲</div>
+              <div id="output-strip" class="kom-ts"></div>
+              <div id="output-numbers" class="numeracja"></div>
           </div>
       </div>
 
