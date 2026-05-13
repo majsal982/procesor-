@@ -26,6 +26,26 @@
             </thead>
             <tbody></tbody>
         </table>
+
+        <div>
+    <button onclick="scrollUp()">⬆</button>
+    <button onclick="scrollDown()">⬇</button>
+    <br><br>
+    <button onclick="openModal()">Show Address</button>
+</div>
+
+
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h3>Show Address</h3>
+        <input type="number" id="modalInput" placeholder="Podaj adres">
+        <br>
+        <button onclick="goToAddress()">Go!</button>
+        <button onclick="closeModal()">Anuluj</button>
+    </div>
+
+
       </div>
     </section>
 
