@@ -375,6 +375,13 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
+window.onclick = function(e) {
+    let modal = document.getElementById("modal");
+    if (e.target === modal) {
+        closeModal();
+    }
+};
+
 
 window.onload = init;
 
