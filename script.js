@@ -367,3 +367,103 @@ window.onclick = function (e) {
 };
 
 window.onload = init;
+
+
+//pamiec
+const RAM_SIZE = 512;
+const VIEW_SIZE = 10;
+
+let start = 0;
+
+let memory = Array.from({length: RAM_SIZE}, () => {
+    return Math.random() > 0.5 ? Math.floor(Math.random()*100) : null;
+});
+
+function render() {
+    const tbody = document.querySelector("#ramTable tbody");
+    tbody.innerHTML = "";
+
+    for (let i = 0; i < VIEW_SIZE; i++) {
+        let addr = start + i;
+        if (addr >= RAM_SIZE) break;
+
+        let tr = document.createElement("tr");
+        let tdAddr = document.createElement("td");
+        let tdVal = document.createElement("td");
+
+        tdAddr.textContent = addr;
+        tdAddr.classList.add("addrShade");
+
+        if (addr === 0) {
+            tdAddr.classList.add("acc");
+            tdVal.classList.add("acc");
+        }
+
+        let val = memory[addr];
+
+        if (val === null) {
+            tdVal.textContent = "?";
+            tdVal.classList.add("unknown");
+        } else {
+            tdVal.textContent = val;
+        }
+
+        tdVal.onclick = () => {
+            let newVal = prompt("Nowa wartość:");
+            if (newVal === null) return;
+
+            memory[addr] = newVal === "" ? null : parseInt(newVal);
+            render();
+        };
+
+        tr.appendChild(tdAddr);
+        tr.appendChild(tdVal);
+        tbody.appendChild(tr);
+    }
+}
+
+function scrollUp() {
+    if (start > 0) {
+        start--;
+        render();
+    }
+}
+
+function scrollDown() {
+    if (start < RAM_SIZE - VIEW_SIZE) {
+        start++;
+        render();
+    }
+}
+
+
+function openModal() {
+    document.getElementById("modal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+function goToAddress() {
+    let val = parseInt(document.getElementById("modalInput").value);
+
+    if (!isNaN(val) && val >= 0 && val < RAM_SIZE) {
+        start = val;
+        render();
+        closeModal();
+    } else {
+        alert("Niepoprawny adres!");
+    }
+}
+
+window.onclick = function(e) {
+    let modal = document.getElementById("modal");
+    if (e.target === modal) {
+        closeModal();
+    }
+};
+
+render();
+
+//pamiec
