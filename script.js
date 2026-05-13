@@ -49,8 +49,8 @@ function addRow() {
 function renderProcessor(instruction = '', argument = '') {
   const instructionField = document.getElementById('instruction');
   const argumentField = document.getElementById('argument');
-  if (instructionField) instructionField.value = instruction;
-  if (argumentField) argumentField.value = argument;
+  if (instructionField) fitTextToInput(instructionField, instruction);
+  if (argumentField) fitTextToInput(argumentField, argument);
 }
 
 function renderMemory() {
@@ -381,6 +381,25 @@ window.onclick = function(e) {
         closeModal();
     }
 };
+
+function fitTextToInput(input, text) {
+  const canvas = fitTextToInput.canvas || (fitTextToInput.canvas = document.createElement("canvas"));
+  const ctx = canvas.getContext("2d");
+
+  const style = getComputedStyle(input);
+  ctx.font = `${style.fontSize} ${style.fontFamily}`;
+
+  const maxWidth = input.clientWidth - 10;
+
+  let trimmed = text;
+
+  while (ctx.measureText(trimmed + "...").width > maxWidth && trimmed.length > 0) {
+    trimmed = trimmed.slice(0, -1);
+  }
+
+  input.value = trimmed + (trimmed !== text ? "..." : "");
+  input.title = text;
+}
 
 
 window.onload = init;
