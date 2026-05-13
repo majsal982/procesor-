@@ -331,13 +331,14 @@ function executeStep() {
 }
 
 function step() {
-  if (!RAM.program.length) loadProgram();
+  loadProgram();
   executeStep();
 }
 
 function runAuto() {
   if (RAM.isRunning) return;
-  if (!RAM.program.length) loadProgram();
+
+  loadProgram();
   RAM.isRunning = true;
   RAM.interval = setInterval(() => {
     if (RAM.currentLine >= RAM.program.length) {
