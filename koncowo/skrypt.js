@@ -229,6 +229,19 @@ function showAddressPrompt() {
 }
 
 
-/** IGOR: Save current program to a file */
+/** LILIANA: Save current program to a file */
+
+
+function saveToFile() {
+    let out = "";
+    document.querySelectorAll('#editor-body tr').forEach(r => {
+        const label = r.querySelector('.cell-label').value;
+        const instr = r.querySelector('.cell-instr').value;
+        const arg = r.querySelector('.cell-arg').value;
+        const comment = r.querySelectorAll('input')[2].value;
+        if(instr) out += `${label};${instr};${arg};${comment}\n`;
+    });
+    
+}
 
 /** IGOR: Load a program file into the editor */
