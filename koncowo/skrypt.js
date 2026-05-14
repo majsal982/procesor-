@@ -19,6 +19,14 @@
 
 /** MAJA: Execute one program step and handle instruction flow */
 /** Wykonanie kroku z animacjami */
+async function executeStep() {
+    if (RAM.currentLine >= RAM.program.length) { stop(); return; }
+    
+    const line = RAM.program[RAM.currentLine];
+    const cpuBox = document.querySelector('#processor .proc-inner');
+    const editorRow = document.getElementById(`row-${RAM.currentLine}`);
+
+    if(!line.instr) { RAM.currentLine++; renderAll(); return; }
 
 
 /** MAJA: Parse editor rows into program instructions and labels */
