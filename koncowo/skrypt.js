@@ -48,6 +48,12 @@ async function executeStep() {
             RAM.registers[0] = val;
             break;
 
+    case 'STORE':
+            const targetCell = getMemCellElement(addr) || document.getElementById('memory-body');
+            await animatePacket(cpuBox, targetCell, RAM.registers[0], 'data');
+            RAM.registers[addr] = RAM.registers[0];
+            break;
+
 
 /** MAJA: Parse editor rows into program instructions and labels */
 function loadProgram() {
