@@ -91,6 +91,14 @@ function animatePacket(fromElem, toElem, text, type = 'instr') {
 /** LILIANA: Memory cell lookup for animations */
 /** Pobieranie elementu komórki pamięci do animacji */
 
+function getMemCellElement(addr) {
+    if (addr >= RAM.memoryOffset && addr < RAM.memoryOffset + 12) {
+        const row = document.getElementById(`mem-row-${addr}`);
+        return row ? row.cells[1] : null;
+    }
+    return null;
+}
+
 /** MAJA: Execute one program step and handle instruction flow */
 /** Wykonanie kroku z animacjami */
 async function executeStep() {
