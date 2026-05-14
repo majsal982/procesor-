@@ -56,7 +56,12 @@ if (inStrip) {
     document.getElementById('input-head').style.left = (RAM.inputHead * stepSize + 5) + "px";
 }
 /** BEATA: Renderowanie taśmy wyjściowej */
-
+const outStrip = document.getElementById('output-strip');
+if (outStrip) {
+    outStrip.innerHTML = RAM.output.map(v => `<div class="komorka">${v}</div>`).join('');
+    document.getElementById('output-numbers').innerHTML = RAM.output.map((_, i) => `<div class="nr">${i+1}</div>`).join('');
+    document.getElementById('output-head').style.left = (RAM.output.length * stepSize + 5) + "px";
+}
 // MAJA: Highlight current editor line
 // 4. Podświetlenie aktualnej linii
 const rows = document.querySelectorAll('#editor-body tr');
