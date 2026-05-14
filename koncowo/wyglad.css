@@ -29,8 +29,14 @@ h3 { background: #2c3e50; color: white; text-align: center; margin: -10px -10px 
 /* LILIANA: Memory table styles */
 
 /* BEATA: Input/output tape styles */
-
-/* BEATA: Editor and control panel styles */
+.tasma-label { font-weight: bold; margin-bottom: 2px; }
+.tasma-kontener { position: relative; background: #9bb4ff; border: 2px solid #555; min-height: 80px; padding-top: 25px; overflow-x: auto; margin-bottom: 5px; }
+.strzalka { position: absolute; top: 2px; color: rgb(255, 145, 0); width: 44px; text-align: center; font-size: 22px; }
+.kom-ts { display: flex; gap: 5px; padding: 5px; }
+.komorka { min-width: 44px; height: 34px; background: white; border: 1px solid #000; text-align: center; line-height: 34px; font-size: 16px; font-weight: bold; }
+.numeracja { display: flex; gap: 5px; padding: 0 5px; font-size: 11px; }
+.nr { min-width: 44px; text-align: center; }
+/* IGOR: Editor and control panel styles */
 
 /* MAJA: Animation packet styles */
 .data-packet {
