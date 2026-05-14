@@ -1,4 +1,28 @@
-/* IGOR: Global layout and toolbar styles */
+/* MAJA głowny wyglad */
+
+body { background: #9bb4ff; font-family: Tahoma, sans-serif; margin: 0; font-size: 12px; }
+
+/* TOOLBAR POZIOMY */
+.toolbar { 
+    background: #f0f0f0; 
+    border-bottom: 1px solid #a0a0a0; 
+    padding: 5px 10px; 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    gap: 2px; 
+}
+.toolbar-group { display: flex; align-items: center; gap: 2px; }
+.tool-btn { border: 1px solid transparent; background: none; cursor: pointer; padding: 4px; display: flex; align-items: center; }
+.tool-btn:hover { background: #ddd; border-color: #888; }
+.toolbar-divider { width: 1px; height: 20px; background: #aaa; margin: 0 8px; }
+
+main { display: flex; gap: 15px; padding: 15px; padding-bottom: 50px; }
+#lewy { width: 230px; }
+#prawy { flex: 1; }
+section { background: #cbd5ff; border: 2px solid #808080; padding: 10px; margin-bottom: 10px; }
+h3 { background: #2c3e50; color: white; text-align: center; margin: -10px -10px 10px -10px; padding: 5px; font-size: 12px; }
+
 
 /* IGOR: Processor display styles */
 
