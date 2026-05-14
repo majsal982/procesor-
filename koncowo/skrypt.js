@@ -70,6 +70,11 @@ async function executeStep() {
             await animatePacket(cpuBox, outCell, writeVal, 'data');
             break;
 
+    case 'ADD': RAM.registers[0] = (RAM.registers[0]||0) + val; break;
+        case 'SUB': RAM.registers[0] = (RAM.registers[0]||0) - val; break;
+        case 'MULT': RAM.registers[0] = (RAM.registers[0]||0) * val; break;
+        case 'DIV': RAM.registers[0] = val !== 0 ? Math.floor((RAM.registers[0]||0) / val) : 0; break;
+        
 
 /** MAJA: Parse editor rows into program instructions and labels */
 function loadProgram() {
