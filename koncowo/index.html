@@ -7,8 +7,21 @@
     <link rel="stylesheet" href="wyglad.css">
 </head>
 <body>
-<!-- IGOR: Toolbar and application shell -->
-
+<!-- Beata: Toolbar and application shell -->
+<div class="toolbar">
+    <div class="toolbar-group">
+        <button class="tool-btn" onclick="location.reload()" title="Nowy"><img src="https://img.icons8.com/material-outlined/20/000000/new-file.png"></button>
+        <button class="tool-btn" onclick="document.getElementById('file-input').click()" title="Otwórz"><img src="https://img.icons8.com/material-outlined/20/000000/folder-invoices.png"></button>
+        <button class="tool-btn" onclick="saveToFile()" title="Zapisz"><img src="https://img.icons8.com/material-outlined/20/000000/save.png"></button>
+    </div>
+    <div class="toolbar-divider"></div>
+    <div class="toolbar-group">
+        <button class="tool-btn" onclick="runAuto()" title="Start"><img src="https://img.icons8.com/material-sharp/20/228BE6/play.png"></button>
+        <button class="tool-btn" onclick="pause()" title="Pauza"><img src="https://img.icons8.com/material-sharp/20/000000/pause.png"></button>
+        <button class="tool-btn" onclick="step()" title="Krok"><img src="https://img.icons8.com/material-sharp/20/228BE6/fast-forward.png"></button>
+        <button class="tool-btn" onclick="stop()" title="Reset"><img src="https://img.icons8.com/material-outlined/20/FD7E14/restart.png"></button>
+    </div>
+</div>
 <section id="lewy">
 
 <!-- IGOR: Processor display section -->
