@@ -95,6 +95,11 @@ async function executeStep() {
             renderAll(); return;
     }
 
+    
+    RAM.currentLine++;
+    renderAll();
+}
+
 /** MAJA: Parse editor rows into program instructions and labels */
 function loadProgram() {
     RAM.program = []; 
