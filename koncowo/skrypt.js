@@ -19,7 +19,86 @@
 
 /** MAJA: Execute one program step and handle instruction flow */
 /** Wykonanie kroku z animacjami */
+async function executeStep() {
+    if (RAM.currentLine >= RAM.program.length) { stop(); return; }
+    
+    const line = RAM.program[RAM.currentLine];
+    const cpuBox = document.querySelector('#processor .proc-inner');
+    const editorRow = document.getElementById(`row-${RAM.currentLine}`);
 
+    if(!line.instr) { RAM.currentLine++; renderAll(); return; }
+    
+    
+    const instrSource = editorRow ? editorRow.querySelector('.cell-instr') : null;
+    await animatePacket(instrSource || editorRow, cpuBox, line.instr, 'instr');
+
+    document.getElementById('instruction').value = line.instr;
+    document.getElementById('argument').value = line.arg;
+    
+    let addr = parseInt(line.arg);
+    let isLiteral = line.arg.startsWith('=');
+    let val = isLiteral ? parseInt(line.arg.slice(1)) : (RAM.registers[addr] || 0);
+
+    switch(line.instr) {
+        case 'LOAD':
+            if (!isLiteral) {
+                const memCell = getMemCellElement(addr) || document.getElementById('memory-body');
+                await animatePacket(memCell, cpuBox, val, 'data');
+            }
+            RAM.registers[0] = val;
+            break;
+
+    case 'STORE':
+            const targetCell = getMemCellElement(addr) || document.getElementById('memory-body');
+            await animatePacket(cpuBox, targetCell, RAM.registers[0], 'data');
+            RAM.registers[addr] = RAM.registers[0];
+            break;
+
+    case 'READ':
+            const inCells = document.querySelectorAll('#input-strip .komorka');
+            const inSource = inCells[RAM.inputHead] || document.getElementById('input-strip');
+            const memTarget = getMemCellElement(addr) || document.getElementById('memory-body');
+            await animatePacket(inSource, memTarget, RAM.input[RAM.inputHead] || 0, 'data');
+            RAM.registers[addr] = parseInt(RAM.input[RAM.inputHead++] || 0);
+            break;
+
+     case 'WRITE':
+            const writeVal = line.arg === "" ? RAM.registers[0] : val;
+            RAM.output.push(writeVal);
+            renderAll();
+            const outCell = document.getElementById('output-strip').lastElementChild || document.getElementById('output-strip');
+            await animatePacket(cpuBox, outCell, writeVal, 'data');
+            break;
+
+    case 'ADD': RAM.registers[0] = (RAM.registers[0]||0) + val; break;
+        case 'SUB': RAM.registers[0] = (RAM.registers[0]||0) - val; break;
+        case 'MULT': RAM.registers[0] = (RAM.registers[0]||0) * val; break;
+        case 'DIV': RAM.registers[0] = val !== 0 ? Math.floor((RAM.registers[0]||0) / val) : 0; break;
+        
+    case 'JUMP': 
+            if(RAM.labelMap[line.arg] !== undefined) { 
+                RAM.currentLine = RAM.labelMap[line.arg]; 
+                renderAll(); return; 
+            }
+            break;
+            
+        case 'JZERO':
+            if((RAM.registers[0]||0) === 0 && RAM.labelMap[line.arg] !== undefined) { 
+                RAM.currentLine = RAM.labelMap[line.arg]; 
+                renderAll(); return; 
+            }
+            break;
+
+        case 'HALT': 
+            pause(); 
+            document.getElementById('p-footer').innerText = "Status: HALT - Zakończono."; 
+            renderAll(); return;
+    }
+
+    
+    RAM.currentLine++;
+    renderAll();
+}
 
 /** MAJA: Parse editor rows into program instructions and labels */
 function loadProgram() {

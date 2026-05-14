@@ -9,6 +9,8 @@
 <body>
 <!-- IGOR: Toolbar and application shell -->
 
+<section id="lewy">
+
 <!-- IGOR: Processor display section -->
 
 <!-- LILIANA: Memory panel section -->
@@ -21,9 +23,13 @@
             <tbody id="memory-body"></tbody>
         </table>
     </div>
-
+    <div class="memory-nav">
+        <button onclick="scrollMemory(-1)">▲</button>
+        <button class="btn-show-addr" onclick="showAddressPrompt()">Show Address...</button>
+        <button onclick="scrollMemory(1)">▼</button>
+    </div>
 </div>
-
+</section>
 <!-- BEATA: Input tape UI -->
 <section id="prawy">
     <div class="tasma-sekcja" id="sec-input">
