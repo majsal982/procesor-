@@ -16,17 +16,48 @@ function renderAll(){
         }
     }
 
-
+}
 /** BEATA: Renderowanie taśmy wejściowej */
 
 /** BEATA: Renderowanie taśmy wyjściowej */
 
 // IGOR: Highlight current editor line
 // 4. Podświetlenie aktualnej linii
-}
+
 /** MAJA: Animation engine for flying packets */
 /** Funkcja animująca "latający kwadrat" */
+function animatePacket(fromElem, toElem, text, type = 'instr') {
+    if (!fromElem || !toElem) return Promise.resolve();
 
+    const start = fromElem.getBoundingClientRect();
+    const end = toElem.getBoundingClientRect();
+
+    const packet = document.createElement('div');
+    packet.className = `data-packet ${type === 'data' ? 'packet-data' : 'packet-instr'}`;
+    packet.innerText = String(text);
+    packet.style.left = start.left + "px";
+    packet.style.top = start.top + "px";
+    document.body.appendChild(packet);
+
+    const animation = packet.animate([
+        { left: start.left + "px", top: start.top + "px", opacity: 1, transform: 'scale(1)' },
+        { left: (end.left + end.width / 4) + "px", top: (end.top + end.height / 4) + "px", opacity: 0.5, transform: 'scale(0.8)' }
+    ], {
+        duration: 600,
+        easing: 'ease-in-out'
+    });
+
+    return new Promise(resolve => {
+        animation.onfinish = () => {
+            packet.remove();
+            if (toElem.closest && toElem.closest('#processor')) {
+                toElem.classList.add('cpu-active');
+                setTimeout(() => toElem.classList.remove('cpu-active'), 400);
+            }
+            resolve();
+        };
+    });
+}
 /** LILIANA: Memory cell lookup for animations */
 /** Pobieranie elementu komórki pamięci do animacji */
 
