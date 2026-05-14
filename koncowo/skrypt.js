@@ -54,6 +54,14 @@ async function executeStep() {
             RAM.registers[addr] = RAM.registers[0];
             break;
 
+    case 'READ':
+            const inCells = document.querySelectorAll('#input-strip .komorka');
+            const inSource = inCells[RAM.inputHead] || document.getElementById('input-strip');
+            const memTarget = getMemCellElement(addr) || document.getElementById('memory-body');
+            await animatePacket(inSource, memTarget, RAM.input[RAM.inputHead] || 0, 'data');
+            RAM.registers[addr] = parseInt(RAM.input[RAM.inputHead++] || 0);
+            break;
+
 
 /** MAJA: Parse editor rows into program instructions and labels */
 function loadProgram() {
