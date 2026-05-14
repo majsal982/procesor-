@@ -13,8 +13,31 @@
 
 <!-- LILIANA: Memory panel section -->
 
-<!-- BEATA: Input tape UI -->
+<div id="pamiec-kontener">
+    <h3>MEMORY</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Addr</th><th>Value</th></tr></thead>
+            <tbody id="memory-body"></tbody>
+        </table>
+    </div>
 
+</div>
+
+<!-- BEATA: Input tape UI -->
+<section id="prawy">
+    <div class="tasma-sekcja" id="sec-input">
+    <div class="tasma-label">wejście</div>
+    <div class="tasma-kontener">
+        <div id="input-head" class="strzalka">▼</div>
+        <div id="input-strip" class="kom-ts"></div>
+        <div id="input-numbers" class="numeracja"></div>
+    </div>
+    <div class="add-box">
+        <input type="number" id="val-in" placeholder="Liczba">
+        <button onclick="addToIn()">DODAJ</button>
+        </div>
+    </div>
 <!-- BEATA: Output tape UI -->
 
 <!-- IGOR: Program editor UI -->
