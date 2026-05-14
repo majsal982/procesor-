@@ -46,14 +46,19 @@ function renderAll(){
         }
     }
 
-}
+
 /** BEATA: Renderowanie taśmy wejściowej */
 
 /** BEATA: Renderowanie taśmy wyjściowej */
 
-// IGOR: Highlight current editor line
+// MAJA: Highlight current editor line
 // 4. Podświetlenie aktualnej linii
-
+const rows = document.querySelectorAll('#editor-body tr');
+    rows.forEach((r, i) => {
+        r.classList.remove('current-line');
+        if(i === RAM.currentLine && RAM.isRunning) r.classList.add('current-line');
+    });
+}
 /** MAJA: Animation engine for flying packets */
 /** Funkcja animująca "latający kwadrat" */
 function animatePacket(fromElem, toElem, text, type = 'instr') {
