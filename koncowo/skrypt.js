@@ -46,14 +46,30 @@ function renderAll(){
         }
     }
 
-}
+
 /** BEATA: Renderowanie taśmy wejściowej */
-
+const stepSize = 49;
+const inStrip = document.getElementById('input-strip');
+if (inStrip) {
+    inStrip.innerHTML = RAM.input.map(v => `<div class="komorka">${v}</div>`).join('');
+    document.getElementById('input-numbers').innerHTML = RAM.input.map((_, i) => `<div class="nr">${i+1}</div>`).join('');
+    document.getElementById('input-head').style.left = (RAM.inputHead * stepSize + 5) + "px";
+}
 /** BEATA: Renderowanie taśmy wyjściowej */
-
-// IGOR: Highlight current editor line
+const outStrip = document.getElementById('output-strip');
+if (outStrip) {
+    outStrip.innerHTML = RAM.output.map(v => `<div class="komorka">${v}</div>`).join('');
+    document.getElementById('output-numbers').innerHTML = RAM.output.map((_, i) => `<div class="nr">${i+1}</div>`).join('');
+    document.getElementById('output-head').style.left = (RAM.output.length * stepSize + 5) + "px";
+}
+// MAJA: Highlight current editor line
 // 4. Podświetlenie aktualnej linii
-
+const rows = document.querySelectorAll('#editor-body tr');
+    rows.forEach((r, i) => {
+        r.classList.remove('current-line');
+        if(i === RAM.currentLine && RAM.isRunning) r.classList.add('current-line');
+    });
+}
 /** MAJA: Animation engine for flying packets */
 /** Funkcja animująca "latający kwadrat" */
 function animatePacket(fromElem, toElem, text, type = 'instr') {
