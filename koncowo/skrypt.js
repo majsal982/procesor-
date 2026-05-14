@@ -130,6 +130,10 @@ function loadProgram() {
 /** BEATA: Add a value to the input tape */
 
 /** LILIANA: Scroll the memory window and navigate addresses */
+function scrollMemory(d) {
+    RAM.memoryOffset = Math.max(0, Math.min(88, RAM.memoryOffset + d));
+    renderAll();
+}
 
 /** IGOR: Save current program to a file */
 
