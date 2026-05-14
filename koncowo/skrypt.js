@@ -48,7 +48,13 @@ function renderAll(){
 
 
 /** BEATA: Renderowanie taśmy wejściowej */
-
+const stepSize = 49;
+const inStrip = document.getElementById('input-strip');
+if (inStrip) {
+    inStrip.innerHTML = RAM.input.map(v => `<div class="komorka">${v}</div>`).join('');
+    document.getElementById('input-numbers').innerHTML = RAM.input.map((_, i) => `<div class="nr">${i+1}</div>`).join('');
+    document.getElementById('input-head').style.left = (RAM.inputHead * stepSize + 5) + "px";
+}
 /** BEATA: Renderowanie taśmy wyjściowej */
 
 // MAJA: Highlight current editor line
