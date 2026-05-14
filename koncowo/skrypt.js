@@ -1,7 +1,37 @@
 /* IGOR: Global RAM state and runtime metadata */
 
-/** IGOR: Application initialization and editor creation */
+/** Maja: Application initialization and editor creation */
+function init() {
+    const tbody = document.getElementById('editor-body');
+    tbody.innerHTML = '';
+    for (let i = 0; i < 20; i++) addRow();
+    renderAll();
+}
 
+/** Dodawanie nowego wiersza do edytora kodu */
+function addRow() {
+    const tbody = document.getElementById('editor-body');
+    const tr = document.createElement('tr');
+    // Dodajemy ID do wiersza, aby animacja wiedziała skąd startować
+    tr.id = `row-${tbody.children.length}`; 
+    tr.innerHTML = `
+        <td style="background:#e0e0e0; font-weight:bold;">${tbody.children.length}</td>
+        <td><input type="text" class="cell-label"></td>
+        <td><select class="cell-instr">
+            <option value=""></option>
+            <option value="READ">READ</option><option value="WRITE">WRITE</option>
+            <option value="LOAD">LOAD</option><option value="STORE">STORE</option>
+            <option value="ADD">ADD</option><option value="SUB">SUB</option>
+            <option value="MULT">MULT</option><option value="DIV">DIV</option>
+            <option value="JUMP">JUMP</option><option value="JZERO">JZERO</option>
+            <option value="HALT">HALT</option>
+        </select></td>
+        <td><input type="text" class="cell-arg"></td>
+        <td><input type="text"></td>`;
+    tbody.appendChild(tr);
+}
+
+/** Renderowanie całego interfejsu */
 /** LILIANA: Renderowanie pamięci RAM */
 
 function renderAll(){
