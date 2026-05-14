@@ -3,11 +3,11 @@ ____________________
 
 # Procesor-
 
-linijki z poleceniami + przyciski działania, poleceń do wyboru i zais, załadowaniu pliku : Maja Salnik - majsal982 - 
+linijki z poleceniami , poleceń do wyboru i zais, załadowaniu pliku : Maja Salnik - majsal982 - 
 
 pamięć, pobieranie wyników z procesora i przechowywanie danych: Liliana Szoszew - lilaaa1234
 
-wejscie i wyjscie, linijka z wybieraniem liczb do wpisania, linia z wynikami ktore procesor wyda : Beata Chycka - Becia123
+wejscie i wyjscie, linijka z wybieraniem liczb do wpisania, linia z wynikami ktore procesor wyda + przyciski działania: Beata Chycka - Becia123
 
 proces, szkielet HTML (lewy gorny róg), obliczanie i procesowanie podanych danych na podstawie linii wejscia i poleceń podanych : Igor Brzeziński- SeishiUmaiIB
 
