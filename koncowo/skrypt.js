@@ -248,7 +248,11 @@ function saveToFile() {
         const comment = r.querySelectorAll('input')[2].value;
         if(instr) out += `${label};${instr};${arg};${comment}\n`;
     });
-    
+    const blob = new Blob([out], {type: "text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "program.ram";
+    a.click();
 }
 
 /** IGOR: Load a program file into the editor */
