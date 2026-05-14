@@ -4,6 +4,19 @@
 
 /** LILIANA: Renderowanie pamięci RAM */
 
+function renderAll(){
+    const mBody = document.getElementById('memory-body');
+    if (mBody) {
+        mBody.innerHTML = '';
+        for (let i = 0; i < 12; i++) {
+            let addr = RAM.memoryOffset + i;
+            if(addr >= 100) break;
+            let val = RAM.registers[addr];
+            mBody.innerHTML += `<tr id="mem-row-${addr}"><td class="addr-cell">${addr}</td><td class="${val===null?'val-null':'val-active'}">${val===null?'?':val}</td></tr>`;
+        }
+    }
+
+}
 /** BEATA: Renderowanie taśmy wejściowej */
 
 /** BEATA: Renderowanie taśmy wyjściowej */
@@ -13,7 +26,38 @@
 
 /** MAJA: Animation engine for flying packets */
 /** Funkcja animująca "latający kwadrat" */
+function animatePacket(fromElem, toElem, text, type = 'instr') {
+    if (!fromElem || !toElem) return Promise.resolve();
 
+    const start = fromElem.getBoundingClientRect();
+    const end = toElem.getBoundingClientRect();
+
+    const packet = document.createElement('div');
+    packet.className = `data-packet ${type === 'data' ? 'packet-data' : 'packet-instr'}`;
+    packet.innerText = String(text);
+    packet.style.left = start.left + "px";
+    packet.style.top = start.top + "px";
+    document.body.appendChild(packet);
+
+    const animation = packet.animate([
+        { left: start.left + "px", top: start.top + "px", opacity: 1, transform: 'scale(1)' },
+        { left: (end.left + end.width / 4) + "px", top: (end.top + end.height / 4) + "px", opacity: 0.5, transform: 'scale(0.8)' }
+    ], {
+        duration: 600,
+        easing: 'ease-in-out'
+    });
+
+    return new Promise(resolve => {
+        animation.onfinish = () => {
+            packet.remove();
+            if (toElem.closest && toElem.closest('#processor')) {
+                toElem.classList.add('cpu-active');
+                setTimeout(() => toElem.classList.remove('cpu-active'), 400);
+            }
+            resolve();
+        };
+    });
+}
 /** LILIANA: Memory cell lookup for animations */
 /** Pobieranie elementu komórki pamięci do animacji */
 
@@ -117,6 +161,10 @@ function loadProgram() {
 /** BEATA: Add a value to the input tape */
 
 /** LILIANA: Scroll the memory window and navigate addresses */
+function scrollMemory(d) {
+    RAM.memoryOffset = Math.max(0, Math.min(88, RAM.memoryOffset + d));
+    renderAll();
+}
 
 /** IGOR: Save current program to a file */
 
