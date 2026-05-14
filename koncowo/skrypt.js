@@ -20,8 +20,19 @@
 /** MAJA: Execute one program step and handle instruction flow */
 /** Wykonanie kroku z animacjami */
 
-/** MAJA: Parse editor rows into program instructions and labels */
 
+/** MAJA: Parse editor rows into program instructions and labels */
+function loadProgram() {
+    RAM.program = []; 
+    RAM.labelMap = {};
+    document.querySelectorAll('#editor-body tr').forEach((row, i) => {
+        const label = row.querySelector('.cell-label').value.trim();
+        const instr = row.querySelector('.cell-instr').value;
+        const arg = row.querySelector('.cell-arg').value.trim();
+        RAM.program.push({ instr, arg });
+        if(label) RAM.labelMap[label] = i;
+    });
+}
 /** IGOR: Runtime control functions */
 
 /** BEATA: Add a value to the input tape */
