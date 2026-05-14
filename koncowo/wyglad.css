@@ -48,7 +48,6 @@ input[type="text"], select { width: 100%; border: none; background: transparent;
 
 #main-footer { background: #ffcc33; padding: 6px; position: fixed; bottom: 0; width: 100%; border-top: 1px solid #888; font-weight: bold; }
 
-/* ... (poprzednie style bez zmian) ... */
 
 /* ANIMACJE */
 .highlight {
@@ -73,7 +72,7 @@ input[type="text"], select { width: 100%; border: none; background: transparent;
     transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* ... (zachowaj poprzednie style) ... */
+
 
 /* Animacja strzałki */
 .flow-line {
