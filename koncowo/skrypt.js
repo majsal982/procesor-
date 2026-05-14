@@ -27,6 +27,26 @@ async function executeStep() {
     const editorRow = document.getElementById(`row-${RAM.currentLine}`);
 
     if(!line.instr) { RAM.currentLine++; renderAll(); return; }
+    
+    
+    const instrSource = editorRow ? editorRow.querySelector('.cell-instr') : null;
+    await animatePacket(instrSource || editorRow, cpuBox, line.instr, 'instr');
+
+    document.getElementById('instruction').value = line.instr;
+    document.getElementById('argument').value = line.arg;
+    
+    let addr = parseInt(line.arg);
+    let isLiteral = line.arg.startsWith('=');
+    let val = isLiteral ? parseInt(line.arg.slice(1)) : (RAM.registers[addr] || 0);
+
+    switch(line.instr) {
+        case 'LOAD':
+            if (!isLiteral) {
+                const memCell = getMemCellElement(addr) || document.getElementById('memory-body');
+                await animatePacket(memCell, cpuBox, val, 'data');
+            }
+            RAM.registers[0] = val;
+            break;
 
 
 /** MAJA: Parse editor rows into program instructions and labels */
