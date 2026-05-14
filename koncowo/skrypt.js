@@ -112,7 +112,7 @@ async function executeStep() {
             renderAll();
             const outCell = document.getElementById('output-strip').lastElementChild || document.getElementById('output-strip');
             await animatePacket(cpuBox, outCell, writeVal, 'data');
-            break;
+            break;   
 
     case 'ADD': RAM.registers[0] = (RAM.registers[0]||0) + val; break;
         case 'SUB': RAM.registers[0] = (RAM.registers[0]||0) - val; break;
@@ -161,6 +161,10 @@ function loadProgram() {
 /** BEATA: Add a value to the input tape */
 
 /** LILIANA: Scroll the memory window and navigate addresses */
+function scrollMemory(d) {
+    RAM.memoryOffset = Math.max(0, Math.min(88, RAM.memoryOffset + d));
+    renderAll();
+}
 
 /** IGOR: Save current program to a file */
 
