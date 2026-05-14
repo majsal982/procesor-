@@ -28,6 +28,10 @@ h3 { background: #2c3e50; color: white; text-align: center; margin: -10px -10px 
 
 /* LILIANA: Memory table styles */
 
+table { width: 100%; border-collapse: collapse; }
+th { background: #b8d9e9; border: 1px solid #888; padding: 2px; }
+td { border: 1px solid #ccc; height: 24px; }
+
 /* BEATA: Input/output tape styles */
 .tasma-label { font-weight: bold; margin-bottom: 2px; }
 .tasma-kontener { position: relative; background: #9bb4ff; border: 2px solid #555; min-height: 80px; padding-top: 25px; overflow-x: auto; margin-bottom: 5px; }
