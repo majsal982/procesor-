@@ -4,13 +4,26 @@
 
 /** LILIANA: Renderowanie pamięci RAM */
 
+function renderAll(){
+    const mBody = document.getElementById('memory-body');
+    if (mBody) {
+        mBody.innerHTML = '';
+        for (let i = 0; i < 12; i++) {
+            let addr = RAM.memoryOffset + i;
+            if(addr >= 100) break;
+            let val = RAM.registers[addr];
+            mBody.innerHTML += `<tr id="mem-row-${addr}"><td class="addr-cell">${addr}</td><td class="${val===null?'val-null':'val-active'}">${val===null?'?':val}</td></tr>`;
+        }
+    }
+
+
 /** BEATA: Renderowanie taśmy wejściowej */
 
 /** BEATA: Renderowanie taśmy wyjściowej */
 
 // IGOR: Highlight current editor line
 // 4. Podświetlenie aktualnej linii
-
+}
 /** MAJA: Animation engine for flying packets */
 /** Funkcja animująca "latający kwadrat" */
 
