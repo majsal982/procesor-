@@ -213,7 +213,14 @@ function loadProgram() {
 /** IGOR: Runtime control functions */
 
 /** BEATA: Add a value to the input tape */
-
+function addToIn() {
+    const v = document.getElementById('val-in').value;
+    if(v !== "") {
+        RAM.input.push(v);
+        document.getElementById('val-in').value = "";
+        renderAll();
+    }
+}
 /** LILIANA: Scroll the memory window and navigate addresses */
 function scrollMemory(d) {
     RAM.memoryOffset = Math.max(0, Math.min(88, RAM.memoryOffset + d));

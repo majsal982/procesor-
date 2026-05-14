@@ -7,7 +7,7 @@ linijki z poleceniami , poleceń do wyboru i zais, załadowaniu pliku, animacje 
 
 pamięć, pobieranie wyników z procesora i przechowywanie danych, dzialanie zapisu : Liliana Szoszew - lilaaa1234
 
-wejscie i wyjscie, linijka z wybieraniem liczb do wpisania, linia z wynikami ktore procesor wyda + przyciski działania: Beata Chycka - Becia123
+wejscie i wyjscie, linijka z wybieraniem liczb do wpisania, linia z wynikami ktore procesor wyda + przyciski działania html : Beata Chycka - Becia123
 
 proces, szkielet HTML, obliczanie i procesowanie podanych danych na podstawie linii wejscia i poleceń podanych,dodawnie pliku  : Igor Brzeziński- SeishiUmaiIB
 
