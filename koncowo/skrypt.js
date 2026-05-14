@@ -75,6 +75,25 @@ async function executeStep() {
         case 'MULT': RAM.registers[0] = (RAM.registers[0]||0) * val; break;
         case 'DIV': RAM.registers[0] = val !== 0 ? Math.floor((RAM.registers[0]||0) / val) : 0; break;
         
+    case 'JUMP': 
+            if(RAM.labelMap[line.arg] !== undefined) { 
+                RAM.currentLine = RAM.labelMap[line.arg]; 
+                renderAll(); return; 
+            }
+            break;
+            
+        case 'JZERO':
+            if((RAM.registers[0]||0) === 0 && RAM.labelMap[line.arg] !== undefined) { 
+                RAM.currentLine = RAM.labelMap[line.arg]; 
+                renderAll(); return; 
+            }
+            break;
+
+        case 'HALT': 
+            pause(); 
+            document.getElementById('p-footer').innerText = "Status: HALT - Zakończono."; 
+            renderAll(); return;
+    }
 
 /** MAJA: Parse editor rows into program instructions and labels */
 function loadProgram() {
