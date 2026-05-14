@@ -1,7 +1,37 @@
 /* IGOR: Global RAM state and runtime metadata */
 
-/** IGOR: Application initialization and editor creation */
+/** Maja: Application initialization and editor creation */
+function init() {
+    const tbody = document.getElementById('editor-body');
+    tbody.innerHTML = '';
+    for (let i = 0; i < 20; i++) addRow();
+    renderAll();
+}
 
+/** Dodawanie nowego wiersza do edytora kodu */
+function addRow() {
+    const tbody = document.getElementById('editor-body');
+    const tr = document.createElement('tr');
+    // Dodajemy ID do wiersza, aby animacja wiedziała skąd startować
+    tr.id = `row-${tbody.children.length}`; 
+    tr.innerHTML = `
+        <td style="background:#e0e0e0; font-weight:bold;">${tbody.children.length}</td>
+        <td><input type="text" class="cell-label"></td>
+        <td><select class="cell-instr">
+            <option value=""></option>
+            <option value="READ">READ</option><option value="WRITE">WRITE</option>
+            <option value="LOAD">LOAD</option><option value="STORE">STORE</option>
+            <option value="ADD">ADD</option><option value="SUB">SUB</option>
+            <option value="MULT">MULT</option><option value="DIV">DIV</option>
+            <option value="JUMP">JUMP</option><option value="JZERO">JZERO</option>
+            <option value="HALT">HALT</option>
+        </select></td>
+        <td><input type="text" class="cell-arg"></td>
+        <td><input type="text"></td>`;
+    tbody.appendChild(tr);
+}
+
+/** Renderowanie całego interfejsu */
 /** LILIANA: Renderowanie pamięci RAM */
 
 function renderAll(){
@@ -16,7 +46,7 @@ function renderAll(){
         }
     }
 
-}
+
 /** BEATA: Renderowanie taśmy wejściowej */
 const stepSize = 49;
 const inStrip = document.getElementById('input-strip');
@@ -27,9 +57,14 @@ if (inStrip) {
 }
 /** BEATA: Renderowanie taśmy wyjściowej */
 
-// IGOR: Highlight current editor line
+// MAJA: Highlight current editor line
 // 4. Podświetlenie aktualnej linii
-
+const rows = document.querySelectorAll('#editor-body tr');
+    rows.forEach((r, i) => {
+        r.classList.remove('current-line');
+        if(i === RAM.currentLine && RAM.isRunning) r.classList.add('current-line');
+    });
+}
 /** MAJA: Animation engine for flying packets */
 /** Funkcja animująca "latający kwadrat" */
 function animatePacket(fromElem, toElem, text, type = 'instr') {
@@ -66,6 +101,14 @@ function animatePacket(fromElem, toElem, text, type = 'instr') {
 }
 /** LILIANA: Memory cell lookup for animations */
 /** Pobieranie elementu komórki pamięci do animacji */
+
+function getMemCellElement(addr) {
+    if (addr >= RAM.memoryOffset && addr < RAM.memoryOffset + 12) {
+        const row = document.getElementById(`mem-row-${addr}`);
+        return row ? row.cells[1] : null;
+    }
+    return null;
+}
 
 /** MAJA: Execute one program step and handle instruction flow */
 /** Wykonanie kroku z animacjami */
