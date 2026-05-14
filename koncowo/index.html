@@ -45,7 +45,22 @@
         </div>
     </div>
 <!-- BEATA: Output tape UI -->
-
-<!-- IGOR: Program editor UI -->
+<!-- MAJA linijki-->
+<div id="edytor">
+                <div id="panel-sterowania">
+                    <button class="btn-ctrl" onclick="step()">KROK</button>
+                    <button class="btn-ctrl btn-start" onclick="runAuto()">START</button>
+                    <button class="btn-ctrl btn-reset" onclick="stop()">↺ RESET</button>
+                    <button class="btn-ctrl" onclick="addRow()">+ LINIA</button>
+                </div>
+                <div class="table-wrapper-editor">
+                    <table>
+                        <thead><tr><th>LN</th><th>Label</th><th>Instruction</th><th>Arg</th><th>Comment</th></tr></thead>
+                        <tbody id="editor-body"></tbody>
+                    </table>
+                </div>
+            </div>
+    </section>
+</main>
 </body>
 </html>
