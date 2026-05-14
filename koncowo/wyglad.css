@@ -32,6 +32,11 @@ table { width: 100%; border-collapse: collapse; }
 th { background: #b8d9e9; border: 1px solid #888; padding: 2px; }
 td { border: 1px solid #ccc; height: 24px; }
 
+.addr-cell { background: linear-gradient(to right, #ffffff, #b8d9e9); text-align: center; width: 50px; border-right: 1px solid #888; }
+.val-null { background: #d3d3d3 !important; text-align: center; color: #777; font-weight: bold; }
+.val-active { background: #fff !important; text-align: center; font-weight: bold; }
+.table-wrapper { height: 300px; background: white; border: 1px solid #888; overflow: hidden; }
+
 /* BEATA: Input/output tape styles */
 .tasma-label { font-weight: bold; margin-bottom: 2px; }
 .tasma-kontener { position: relative; background: #9bb4ff; border: 2px solid #555; min-height: 80px; padding-top: 25px; overflow-x: auto; margin-bottom: 5px; }
