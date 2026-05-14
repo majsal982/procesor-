@@ -62,6 +62,14 @@ async function executeStep() {
             RAM.registers[addr] = parseInt(RAM.input[RAM.inputHead++] || 0);
             break;
 
+     case 'WRITE':
+            const writeVal = line.arg === "" ? RAM.registers[0] : val;
+            RAM.output.push(writeVal);
+            renderAll();
+            const outCell = document.getElementById('output-strip').lastElementChild || document.getElementById('output-strip');
+            await animatePacket(cpuBox, outCell, writeVal, 'data');
+            break;
+
 
 /** MAJA: Parse editor rows into program instructions and labels */
 function loadProgram() {
