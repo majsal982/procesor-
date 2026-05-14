@@ -112,7 +112,7 @@ async function executeStep() {
             renderAll();
             const outCell = document.getElementById('output-strip').lastElementChild || document.getElementById('output-strip');
             await animatePacket(cpuBox, outCell, writeVal, 'data');
-            break;
+            break;   
 
     case 'ADD': RAM.registers[0] = (RAM.registers[0]||0) + val; break;
         case 'SUB': RAM.registers[0] = (RAM.registers[0]||0) - val; break;
