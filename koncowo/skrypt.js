@@ -166,6 +166,15 @@ function scrollMemory(d) {
     renderAll();
 }
 
+function showAddressPrompt() {
+    let a = prompt("Podaj adres (0-99):");
+    if(a !== null) {
+        RAM.memoryOffset = Math.max(0, Math.min(88, parseInt(a) || 0));
+        renderAll();
+    }
+}
+
+
 /** IGOR: Save current program to a file */
 
 /** IGOR: Load a program file into the editor */
